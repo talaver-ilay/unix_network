@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "charconv": "cpp",
+        "cerrno": "c",
+        "cstdlib": "c"
+    }
+}

@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named error
+
+# Build rule for target.
+error: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 error
+.PHONY : error
+
+# fast build rule for target.
+error/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/error.dir/build.make CMakeFiles/error.dir/build
+.PHONY : error/fast
+
+#=============================================================================
 # Target rules for targets named client
 
 # Build rule for target.
@@ -162,6 +175,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
+	@echo "... error"
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"
