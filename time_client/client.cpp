@@ -5,14 +5,7 @@
 #include    "error.h"
 #include	<unistd.h>
 #include	<string.h>
-#include    <arpa/inet.h>
-
-#define	bzero(ptr,n)		memset(ptr, 0, n)
-
-#define	SA	struct sockaddr
-
-int inet_pton(int family, const char *strptr, void *addrptr);
-int inet_aton(const char *cp, struct in_addr *ap);
+#include    <arpa/inet.h>	
 
 int main(int argc, char **argv){
     int sockfd, n;
@@ -24,10 +17,10 @@ int main(int argc, char **argv){
 
     bzero(&servaddr,sizeof(servaddr));
     servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(123);
-    servaddr.sin_addr.s_addr = inet_addr(argv[1]);
+    servaddr.sin_port = htons(12345);
+    inet_aton(argv[1], (in_addr*)&servaddr.sin_addr.s_addr);
 
-    if(connect(sockfd, (SA*)&servaddr,sizeof(servaddr)) < 0) err_sys("connect error");
+    if(connect(sockfd, (struct sockaddr*)&servaddr,sizeof(servaddr)) < 0) err_sys("connect error");
     else std::cout<<"connect : OK"<<std::endl;
 
     while((n = read(sockfd,recvline, MAXLINE)) > 0){
@@ -43,68 +36,3 @@ int main(int argc, char **argv){
     exit(0);
 }
 
-int inet_pton(int family, const char *strptr, void *addrptr){
-    if (family == AF_INET) {
-    	struct in_addr  in_val;
-
-        if (inet_aton(strptr, &in_val)) {
-            memcpy(addrptr, &in_val, sizeof(struct in_addr));
-            return (1);
-        }
-		return(0);
-    }
-	errno = EAFNOSUPPORT;
-    return (-1);
-}
-int inet_aton(const char *cp, struct in_addr *ap){
-    int dots = 0;
-    u_long acc = 0, addr = 0;
-
-    do {
-	char cc = *cp;
-
-	switch (cc) {
-	case '0':
-	case '1':
-	case '2':
-	case '3':
-	case '4':
-	case '5':
-	case '6':
-	case '7':
-	case '8':
-	case '9':
-	    acc = acc * 10 + (cc - '0');
-	    break;
-
-	case '.':
-	    if (++dots > 3) {
-		return 0;
-	    }
-	    /* Fall through */
-
-	case '\0':
-	    if (acc > 255) {
-		return 0;
-	    }
-	    addr = addr << 8 | acc;
-	    acc = 0;
-	    break;
-
-	default:
-	    return 0;
-	}
-    } while (*cp++) ;
-
-    /* Normalize the address */
-    if (dots < 3) {
-	addr <<= 8 * (3 - dots) ;
-    }
-
-    /* Store it if requested */
-    if (ap) {
-	ap->s_addr = htonl(addr);
-    }
-
-    return 1;    
-}

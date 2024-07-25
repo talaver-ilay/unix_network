@@ -3,6 +3,7 @@
         "*.tcc": "cpp",
         "charconv": "cpp",
         "cerrno": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "iostream": "cpp"
     }
 }

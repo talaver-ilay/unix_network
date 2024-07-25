@@ -3,3 +3,7 @@ Unix-Network-Programming-master
 CMakeFiles/
 time_client/CMakeCache.txt
 *.a
+Makefile
+server
+client
+Makefile
