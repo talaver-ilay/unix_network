@@ -15,6 +15,7 @@
 #define	LISTENQ		1024
 
 void time_send(int clientSocket);
+void echo_send(int clientSocket);
 
 class Socket{
     int socketdescr;
@@ -37,7 +38,8 @@ class Socket{
                 struct sockaddr_in clientaddr;
                 int clientdescr = accept(socketdescr,(struct sockaddr*) NULL, NULL);
                 if(clientdescr < 0) err_sys("Client Sock: ERROR");
-                threads.emplace_back(time_send,clientdescr);
+                // threads.emplace_back(time_send,clientdescr);
+                threads.emplace_back(echo_send, clientdescr); 
             }
             for(auto& thread : threads ){
                 thread.join();
@@ -50,7 +52,13 @@ class Socket{
         ssize_t read_client(char* recvline){
             return read(socketdescr, recvline, MAXLINE);
         }
-        
+        ssize_t write_client(char *buffer){
+            return write(socketdescr, buffer,strlen(buffer));
+        }
+        void close_connect(){
+            shutdown(socketdescr, SHUT_RDWR);
+            close(socketdescr);
+        }
     private:  
          
         int sock_tcp_in(){

@@ -1,5 +1,6 @@
 #include    <iostream>
 #include "my_socket.h"
+#include <csignal>
 
 int main(int argc, char **argv){
     char recvline[MAXLINE + 1];
@@ -8,15 +9,18 @@ int main(int argc, char **argv){
     client.client_connect();
     
     int n;
-    while((n = client.read_client(recvline)) > 0){
+    while(true){
+        std::cout<<"\n";
+        std::cin>>recvline;
+        client.write_client(recvline);
+        bzero(recvline, sizeof(recvline));
+        n = client.read_client(recvline);
         recvline[n] = 0; // завершающий нуль
         if(fputs(recvline,stdout) == EOF) err_sys("fputs error");
-        else std::cout<<"\nfputs : OK"<<std::endl; 
+        bzero(recvline,sizeof(recvline));
+
     }
-    if(n < 0) err_sys("read error");
-    else std::cout<<"read : OK"<<std::endl;
-
-
+    
     exit(0);
 }
 
