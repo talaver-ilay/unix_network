@@ -193,6 +193,33 @@ error.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/error.cpp.s
 .PHONY : error.cpp.s
 
+my_socket.o: my_socket.cpp.o
+.PHONY : my_socket.o
+
+# target to build an object file
+my_socket.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/my_socket.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/my_socket.cpp.o
+.PHONY : my_socket.cpp.o
+
+my_socket.i: my_socket.cpp.i
+.PHONY : my_socket.i
+
+# target to preprocess a source file
+my_socket.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/my_socket.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/my_socket.cpp.i
+.PHONY : my_socket.cpp.i
+
+my_socket.s: my_socket.cpp.s
+.PHONY : my_socket.s
+
+# target to generate assembly for a file
+my_socket.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/my_socket.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/my_socket.cpp.s
+.PHONY : my_socket.cpp.s
+
 server.o: server.cpp.o
 .PHONY : server.o
 
@@ -233,6 +260,9 @@ help:
 	@echo "... error.o"
 	@echo "... error.i"
 	@echo "... error.s"
+	@echo "... my_socket.o"
+	@echo "... my_socket.i"
+	@echo "... my_socket.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"
