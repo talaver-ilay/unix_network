@@ -9,8 +9,7 @@
 // gdb -p PID
 
 int main(int argc, char **argv){
-    Socket server(INADDR_ANY,12345);
-    server.listen_server();
-    
+    Server echo_server(INADDR_ANY,12345);
+    echo_server.listen_server();
     return 0;
 }

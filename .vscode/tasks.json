@@ -8,7 +8,7 @@
         "args": [
           "-std=c++23",
           "-g",
-          "${workspaceFolder}/time_client/*.cpp",
+          "${workspaceFolder}/echo_server/*.cpp",
           "-o",
           "${fileDirname}/${fileBasenameNoExtension}"
         ],
