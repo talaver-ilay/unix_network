@@ -4,8 +4,7 @@
 
 int main(int argc, char **argv){
     if( argc != 2){err_quit("usage : <IPaddress>"); }
-    Socket client(argv[1],12345);
-    client.connect_socket();
+    Client client(argv[1],12345);
     
     while(true){
         std::string input;
