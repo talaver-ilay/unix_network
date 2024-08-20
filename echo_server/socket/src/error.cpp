@@ -1,10 +1,11 @@
-#include	"error.h"
+#include	"../inc/error.h"
 #include	<stdarg.h>		/* ANSI C header file */
 #include	<syslog.h>		/* for syslog() */
 #include 	<stdio.h>
 #include	<errno.h>
 #include	<string.h>
 #include	<stdlib.h>
+
 int		daemon_proc;		/* set nonzero by daemon_init() */
 
 static void	err_doit(int, int, const char *, va_list);

@@ -4,22 +4,22 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 
 set(CMAKE_BUILD_TYPE Debug)
 
-project(echo_server)			# Название проекта
+project(client_server)			# Название проекта
 
-set(CLIENT_SOURCES
-                    src/client.cpp
-                    src/my_socket.cpp
-                    src/error.cpp
-)
+link_directories(${CMAKE_SOURCE_DIR}/socket/build)
 
-set(SERVER_SOURCES
-                    src/server.cpp
-                    src/my_socket.cpp
-                    src/error.cpp
-)
+file(GLOB 
+            SERVER "${CMAKE_SOURCE_DIR}/server/*.cpp")
 
-include_directories("${PROJECT_SOURCE_DIR}/inc")
+add_executable(server ${SERVER})
+            
+target_link_libraries(server libsocket.a)
 
-add_executable(client ${CLIENT_SOURCES})	# Создает исполняемый файл с именем main
 
-add_executable(server ${SERVER_SOURCES})	# Создает исполняемый файл с именем main
+
+file(GLOB 
+            CLIENT "${CMAKE_SOURCE_DIR}/client/*.cpp")
+
+add_executable(client ${CLIENT})
+
+target_link_libraries(client libsocket.a)
