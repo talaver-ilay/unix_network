@@ -12,10 +12,10 @@ file(GLOB
             SERVER "${CMAKE_SOURCE_DIR}/server/*.cpp")
 
 add_executable(server ${SERVER})
-            
+
+# add_subdirectory(socket)
+
 target_link_libraries(server libsocket.a)
-
-
 
 file(GLOB 
             CLIENT "${CMAKE_SOURCE_DIR}/client/*.cpp")

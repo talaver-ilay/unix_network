@@ -13,7 +13,7 @@ class Server: public Socket{
 
         ssize_t write(const char *buffer, const int &descriptor) override;
 
-        ssize_t readn(const int& descriptor)override;
+        ssize_t readn(char*,const int& descriptor)override;
 
         void listen_server();
     

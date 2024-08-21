@@ -14,23 +14,37 @@
         return send(descriptor,buffer,sizeof(buffer),MSG_WAITALL);
     }
 
-    ssize_t Server::readn(const int& descriptor){
-        ssize_t n = 0;
-        char buffer[MAXLINE];
-        // while (1)
-        // {
-           if((n = read(descriptor, buffer, MAXLINE))>0){ return -1;}
-            std::cout<<buffer<<std::endl;   
-        // }
+    ssize_t Server::readn(char* buffer, const int& descriptor){
+        ssize_t bytes_read = read(descriptor, buffer, sizeof(buffer) - 1);
+        std::cout<<bytes_read<<std::endl;
+        if (bytes_read == -1) {
+            std::cerr << "Ошибка чтения из сокета" << std::endl;
+            close_connect(descriptor);
+            return 1;
+        }else if(bytes_read == 0) {
+            // Клиент закрыл соединение
+            std::cout << "Клиент закрыл соединение" << std::endl;
+            close_connect(descriptor);
+            return 1;
+        }
+        buffer[bytes_read] = '\0';
+        return 0;
     }
 
     void Server::listen_server(){
         listen_socket();
+        
+        char buffer[MAXLINE]{0};
         while (true){
-            int clientdescr = accept(sSocketdescr,(struct sockaddr*) NULL, NULL);
-            // char buff[MAXLINE]{0};
-            readn(clientdescr);
-            // if(buff[0] == 'c') close_connect(clientdescr);
+            int clientdescr = accept(sSocketdescr,0, 0);
+            if (clientdescr == -1) {
+                std::cerr << "Ошибка принятия входящего подключения" << std::endl;
+                close(sSocketdescr);
+                return;
+            }
+            while(true){
+                ssize_t n = read(clientdescr, buffer, sizeof(buffer) - 1); 
+                std::cout << "Получено: " << buffer << " и "<<n<<" байт"<<std::endl;}
         }
     }
 

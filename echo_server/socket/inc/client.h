@@ -9,11 +9,11 @@ class Client: public Socket{
 
         ~Client();
 
-        void close_connect(const int& descriptor = 0)override;
+        void close_connect(const int &)override;
 
-        ssize_t write(const char *buffer, const int &descriptor = 0)override;
+        ssize_t write(const char *buffer, const int &)override;
         
-        ssize_t readn(const int &descriptor)override;
+        ssize_t readn(char*, const int &)override;
 
     private:
         void connect_socket()const;
