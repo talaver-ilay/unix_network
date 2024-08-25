@@ -13,8 +13,6 @@ file(GLOB
 
 add_executable(server ${SERVER})
 
-# add_subdirectory(socket)
-
 target_link_libraries(server libsocket.a)
 
 file(GLOB 

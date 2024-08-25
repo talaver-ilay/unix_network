@@ -1,12 +1,12 @@
 #include "socket.h"
 #include <csignal>
 
-Socket::Socket(const char* addr, const uint16_t& port):sSocketdescr(sock_tcp_in()){
+Socket::Socket(const char* addr, const uint16_t& port):sSockfd(sock_tcp_in()){
     sockaddr_new(port);
     inet_aton(addr, (in_addr*)&sSockaddr.sin_addr.s_addr);
 }
 
-Socket::Socket(in_addr_t addr, const uint16_t& port):sSocketdescr(sock_tcp_in()){
+Socket::Socket(in_addr_t addr, const uint16_t& port):sSockfd(sock_tcp_in()){
     sockaddr_new(port);
     sSockaddr.sin_addr.s_addr = htonl(addr);
 }

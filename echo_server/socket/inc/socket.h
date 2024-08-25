@@ -11,7 +11,7 @@
 
 class Socket{
     protected:
-        int sSocketdescr;
+        int sSockfd;
         struct sockaddr_in sSockaddr;
 
     public:

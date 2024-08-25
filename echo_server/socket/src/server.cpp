@@ -36,24 +36,25 @@
         
         char buffer[MAXLINE]{0};
         while (true){
-            int clientdescr = accept(sSocketdescr,0, 0);
+            int clientdescr = accept(sSockfd,0, 0);
             if (clientdescr == -1) {
                 std::cerr << "Ошибка принятия входящего подключения" << std::endl;
-                close(sSocketdescr);
+                close(sSockfd);
                 return;
             }
-            while(true){
-                ssize_t n = read(clientdescr, buffer, sizeof(buffer) - 1); 
+            ssize_t n{1};
+            while(n){
+                n = read(clientdescr, buffer, sizeof(buffer) - 1); 
                 std::cout << "Получено: " << buffer << " и "<<n<<" байт"<<std::endl;}
-        }
+            }
     }
 
     void Server::bind_socket()const{
-            if(bind(sSocketdescr,(struct sockaddr*) &sSockaddr,sizeof(sSockaddr)) < 0) err_sys("Bind: ERROR"); 
+            if(bind(sSockfd,(struct sockaddr*) &sSockaddr,sizeof(sSockaddr)) < 0) err_sys("Bind: ERROR"); 
             else std::cout<<"Bind: OK"<<std::endl;
     }
 
     void Server::listen_socket()const{
-        if(listen(sSocketdescr,SOMAXCONN) < 0) err_sys("Listen error");
+        if(listen(sSockfd,SOMAXCONN) < 0) err_sys("Listen error");
         else std::cout<<"Listen: OK"<<std::endl;
     }
