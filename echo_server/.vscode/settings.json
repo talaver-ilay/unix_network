@@ -72,6 +72,7 @@
         "locale": "cpp",
         "socket": "cpp",
         "fstream": "cpp",
-        "buffer": "cpp"
-    }
+        "buffer": "cpp",
+        
+    },
 }
