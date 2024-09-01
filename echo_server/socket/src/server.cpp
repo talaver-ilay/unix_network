@@ -14,21 +14,24 @@
         return send(descriptor,buffer,sizeof(buffer),MSG_WAITALL);
     }
 
-    ssize_t Server::readn(char* buffer, const int& descriptor){
-        ssize_t bytes_read = read(descriptor, buffer, sizeof(buffer) - 1);
-        std::cout<<bytes_read<<std::endl;
-        if (bytes_read == -1) {
-            std::cerr << "Ошибка чтения из сокета" << std::endl;
-            close_connect(descriptor);
-            return 1;
-        }else if(bytes_read == 0) {
-            // Клиент закрыл соединение
-            std::cout << "Клиент закрыл соединение" << std::endl;
-            close_connect(descriptor);
-            return 1;
-        }
-        buffer[bytes_read] = '\0';
-        return 0;
+    void Server::readn(char *buffer,const int &descriptor){
+        ssize_t bytes_read{1};
+        while(bytes_read){
+                bytes_read = read(descriptor, buffer, sizeof(buffer) - 1);
+                switch (bytes_read){
+                    case -1:
+                        std::cerr << "Ошибка чтения из сокета" << std::endl;
+                        close_connect(descriptor);
+                    break;
+                    case 0:
+                        std::cout << "Клиент закрыл соединение" << std::endl;
+                        close_connect(descriptor);
+                    break;
+                    default:
+                        std::cout << "Получено: " << buffer << " и "<<bytes_read<<" байт"<<std::endl;
+                    break;
+                }
+            }   
     }
 
     void Server::listen_server(){
@@ -42,11 +45,9 @@
                 close(sSockfd);
                 return;
             }
-            ssize_t n{1};
-            while(n){
-                n = read(clientdescr, buffer, sizeof(buffer) - 1); 
-                std::cout << "Получено: " << buffer << " и "<<n<<" байт"<<std::endl;}
-            }
+            
+             
+        }
     }
 
     void Server::bind_socket()const{

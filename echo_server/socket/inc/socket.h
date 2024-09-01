@@ -20,7 +20,7 @@ class Socket{
 
         virtual ~Socket(){}
 
-        virtual ssize_t readn(char*, const int &) = 0;
+        virtual void readn(char*, const int &) = 0;
         
         virtual ssize_t write(const char *, const int &) = 0;
     

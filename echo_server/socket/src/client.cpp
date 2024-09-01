@@ -17,8 +17,8 @@
         return send(sSockfd,buffer,MAXLINE,MSG_WAITALL);
     }
 
-    ssize_t Client::readn(char* buffer, const int &){
-        return read(sSockfd, buffer, sizeof(buffer));
+    void Client::readn(char* buffer, const int &){
+        read(sSockfd, buffer, sizeof(buffer));
     }
 
     

@@ -13,7 +13,7 @@ class Client: public Socket{
 
         ssize_t write(const char *buffer, const int &)override;
         
-        ssize_t readn(char*, const int &)override;
+        void readn(char*, const int &)override;
 
     private:
         void connect_socket()const;

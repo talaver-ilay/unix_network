@@ -73,6 +73,7 @@
         "socket": "cpp",
         "fstream": "cpp",
         "buffer": "cpp",
-        
+        "queue": "cpp",
+        "stack": "cpp"
     },
 }
