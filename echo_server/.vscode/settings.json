@@ -74,6 +74,15 @@
         "fstream": "cpp",
         "buffer": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "any": "cpp",
+        "csignal": "cpp",
+        "deque": "cpp",
+        "map": "cpp",
+        "numeric": "cpp",
+        "numbers": "cpp",
+        "stdfloat": "cpp",
+        "text_encoding": "cpp",
+        "valarray": "cpp"
     },
 }

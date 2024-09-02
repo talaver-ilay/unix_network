@@ -1,9 +1,11 @@
 #include <iostream>
 #include "server.h"
 
-    Server::Server(const char* addr, const uint16_t& port)     :Socket(addr,port){bind_socket();}
-    
-    Server::Server(const in_addr_t& addr, const uint16_t& port):Socket(addr,port){bind_socket();}
+    template<class T>
+    Server::Server(T addr, const uint16_t& port):Socket(addr,port){
+        bind_socket();
+        listen_server();
+    }
 
     void Server::close_connect(const int& descriptor){
         shutdown(descriptor, SHUT_RDWR);
@@ -31,31 +33,24 @@
                         std::cout << "Получено: " << buffer << " и "<<bytes_read<<" байт"<<std::endl;
                     break;
                 }
-            }   
+        }   
     }
 
     void Server::listen_server(){
-        listen_socket();
-        
-        char buffer[MAXLINE]{0};
-        while (true){
+        if(listen(sSockfd,SOMAXCONN) < 0) err_sys("Listen error");
+        char buffer[MAXLINE+1]{0};
+        while(true){
             int clientdescr = accept(sSockfd,0, 0);
             if (clientdescr == -1) {
                 std::cerr << "Ошибка принятия входящего подключения" << std::endl;
                 close(sSockfd);
-                return;
+                break;
             }
-            
-             
+            else readn(buffer,clientdescr);
         }
     }
 
-    void Server::bind_socket()const{
-            if(bind(sSockfd,(struct sockaddr*) &sSockaddr,sizeof(sSockaddr)) < 0) err_sys("Bind: ERROR"); 
-            else std::cout<<"Bind: OK"<<std::endl;
-    }
-
-    void Server::listen_socket()const{
-        if(listen(sSockfd,SOMAXCONN) < 0) err_sys("Listen error");
-        else std::cout<<"Listen: OK"<<std::endl;
+    Server::server_state Server::bind_socket()const{
+        if(bind(sSockfd,(struct sockaddr*) &sSockaddr,sizeof(sSockaddr)) < 0) err_sys("Bind: ERROR"); 
+        return server_state::BIND;
     }

@@ -1,11 +1,10 @@
 #pragma once
 #include "socket.h"
 
-class Server: public Socket{
+class Server: public unix_sock::Socket{
     public:
-        Server(const char* addr, const uint16_t& port); 
-
-        Server(const in_addr_t& addr, const uint16_t& port);
+        template<class T>
+        explicit Server(T addr, const uint16_t& port); 
 
         ~Server(){}
 
@@ -14,14 +13,9 @@ class Server: public Socket{
         ssize_t write(const char *buffer, const int &descriptor) override;
 
         void readn(char *buffer,const int &descriptor)override;
-
-        void listen_server();
-    
+        enum class server_state{BIND,LISTEN,ERROR};
     private:
-        void bind_socket()const;
-
-        
-        
-        void listen_socket()const;
+        server_state bind_socket()const;
+        void listen_server();
     
 };

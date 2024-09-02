@@ -2,10 +2,10 @@
 #include "client.h"
 #include <csignal>
 
-    Client::Client(const char* addr, const uint16_t& port)     :Socket(addr,port){connect_socket();}
-
-    Client::Client(const in_addr_t& addr, const uint16_t& port):Socket(addr,port){connect_socket();}
-    
+    template<class T>
+    Client::Client(T addr, const uint16_t& port):Socket(addr,port){
+        connect_socket();
+    }
     Client::~Client(){}
 
     void Client::close_connect(const int &){
@@ -21,8 +21,6 @@
         read(sSockfd, buffer, sizeof(buffer));
     }
 
-    
     void Client::connect_socket()const{
         if(connect(sSockfd, (struct sockaddr*)&sSockaddr,sizeof(sSockaddr)) < 0) err_sys("Connect: ERROR");
-        else std::cout<<"Connect: OK"<<std::endl;
     }

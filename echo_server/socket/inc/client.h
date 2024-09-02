@@ -1,11 +1,10 @@
 #pragma once
 #include "socket.h"
 
-class Client: public Socket{
+class Client: public unix_sock::Socket{
     public:
-        Client(const char* addr, const uint16_t& port);
-
-        Client(const in_addr_t& addr, const uint16_t& port);
+        template<class T>
+        explicit Client(T addr, const uint16_t& port);
 
         ~Client();
 
